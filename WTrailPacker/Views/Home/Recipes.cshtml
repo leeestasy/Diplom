@@ -1,0 +1,46 @@
+﻿@model HikeViewModel
+
+@{
+    ViewData["Title"] = "Recipes";
+}
+
+<section id="recipes" class="recipes">
+    <h1><b>Рецепты</b></h1>
+    <br />
+    <form method="get" asp-action="Recipes" style="display: flex; gap: 10px; align-items: center;">
+        <input type="text"
+               name="searchTerm"
+               style="font-size: 20px;
+                  padding: 12px;
+                  flex: 1;
+                  min-width: 300px;
+                  height: 30px;"
+               placeholder="Введите название рецепта"
+               class="form-control" />
+        <button type="submit"
+                style="font-size: 20px;
+                   padding: 10px 20px;
+                   height: 50px;
+                   white-space: nowrap;"
+                class="btn btn-primary">
+            Поиск
+        </button>
+    </form>
+    <br />
+    <div class="recipe-grid" style="font-size:20px;">
+        @foreach (var recipe in Model.Recipes)
+        {
+            <div class="recipe-card" style="color: black;" onclick="window.location.href='@Url.Action("RecipeView", "Home", new { id = recipe.RecipeID })'">
+                <b>@recipe.RecipeName</b>
+                <div style="margin-top: 15px; padding-left: 20px;">
+                    @foreach (var ingredient in recipe.RecipeIngredients)
+                    {
+                        <li style="text-align: left; list-style-type: none;">
+                            @ingredient.Product?.ProductName @* (@ingredient.Quantity @ingredient.Unit) *@
+                        </li>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</section>

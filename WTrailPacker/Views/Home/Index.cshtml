@@ -1,0 +1,162 @@
+﻿@model WTrailPacker.Models.HikeViewModel
+
+@{
+    ViewData["Title"] = "TrailPacker";
+}
+
+<div class="text-center">
+    <section id="gallery" class="gallery">
+        <div class="gallery-container">
+            <div class="gallery-item">
+                <img src="/Images/photo2.png" alt="Camping" class="gallery-img" />
+            </div>
+            <div class="gallery-item">
+                <img src="/Images/photo1.png" alt="Fishing" class="gallery-img" />
+            </div>
+            <div class="gallery-item">
+                <img src="/Images/photo3.png" alt="Campfire" class="gallery-img" />
+            </div>
+        </div>
+        <br />
+        <div class="quote">
+            <hr />
+            <br />
+            <p style="font-size:25px;">«Природа — это одна из тех вещей, которые вы можете делать, только когда у вас есть компания»</p>
+            <p class="quote-author" style="font-size:20px;">Карл Саган</p>
+        </div>
+    </section>
+
+    <section id="calculator" class="calculator">
+        <div class="calculator-container">
+            <h1 class="title-calculator" ><b>Расчет количества продуктов в поход</b></h1>
+            <br />
+            <form asp-action="Index" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <input type="hidden" asp-for="Hike.HikeID" />
+
+                <div class="form-group" style="font-size:20px;">
+                    <label asp-for="Hike.NumDays">Количество дней похода</label>
+                    <input type="number" asp-for="Hike.NumDays" class="form-control" placeholder="3" style="font-size:16px;" />
+                    <span asp-validation-for="Hike.NumDays" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="form-group" style="font-size:20px;">
+                    <label asp-for="Hike.NumPeople">Количество человек в группе</label>
+                    <input type="number" asp-for="Hike.NumPeople" class="form-control" style="font-size:16px;" />
+                    <span asp-validation-for="Hike.NumPeople" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="form-group" style="font-size:20px;">
+                    <label asp-for="Hike.TripTypeID">Вид похода</label>
+
+                    <select asp-for="Hike.TripTypeID" asp-items="ViewBag.TripTypes" class="form-control" style="font-size:16px;">
+                        <option value="">Выберите вид похода</option>
+                    </select>
+
+                    <span asp-validation-for="Hike.TripTypeID" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="form-group" style="font-size:20px;">
+                    <label asp-for="Hike.RestrictionID">Пищевые особенности (аллергии)</label>
+                    <select asp-for="Hike.RestrictionID" id="restrictionSelect" class="form-control" style="font-size:16px;">
+                        <option value="">Выберите пищевые особенности</option>
+                        @foreach (var item in ViewBag.DietaryRestrictions ?? Enumerable.Empty<DietaryRestriction>())
+                        {
+                            if (item != null)
+                            {
+                                <option value="@item.RestrictionID" data-description="@item.Description">@item.RestrictionName</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <br />
+                <button type="submit" style="font-size:20px;"  class="btn">Рассчитать продукты</button>
+                @Html.AntiForgeryToken()
+            </form>
+        </div>
+        <br />
+    </section>
+
+    <section id="recipes" class="recipes">
+        <h1><b>Рецепты</b></h1>
+        <br />
+        <div class="recipe-grid" style="font-size:20px;">
+            @foreach (var recipe in Model.Recipes.Take(9))
+            {
+                <div class="recipe-card" style="color: black;" onclick="window.location.href='@Url.Action("RecipeView", "Home", new { id = recipe.RecipeID })'">
+                    <b>@recipe.RecipeName</b>
+                    <div style="margin-top: 15px; padding-left: 20px;">
+                        @foreach (var ingredient in recipe.RecipeIngredients)
+                        {
+                            <li style="text-align: left; list-style-type: none;">
+                                @ingredient.Product?.ProductName @* (@ingredient.Quantity @ingredient.Unit) *@
+                            </li>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+        <br />
+        <br />
+        <button class="btnMirror" style="font-size:20px;" onclick="window.location.href='@Url.Action("Recipes", "Home")'">
+            Показать ещё
+        </button>
+    </section>
+</div>
+@section Scripts {
+    <!-- Подключение зависимостей -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <!-- Font Awesome для иконки -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        $(document).ready(function () {
+            // Инициализация Select2 с кастомизацией
+            $('#restrictionSelect').select2({
+                templateResult: formatOption,
+                templateSelection: formatSelection,
+                escapeMarkup: function (m) { return m; },
+                minimumResultsForSearch: Infinity,
+                width: '100%',
+                dropdownParent: $('#restrictionSelect').closest('.form-group')
+            });
+
+            // Обработчик выбора элемента
+            $('#restrictionSelect').on('change', function () {
+                const description = $(this).find('option:selected').data('description');
+                const $descBlock = $('#restrictionDescription');
+
+                if (description) {
+                    $descBlock.html(description).show();
+                } else {
+                    $descBlock.hide();
+                }
+            });
+
+            // Функции форматирования
+            function formatOption(option) {
+                if (!option.id) return option.text;
+
+                const $container = $('<div>').css({
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                });
+
+                return $container
+                    .append($('<span>').text(option.text))
+                    .append($('<i>', {
+                        class: 'fas fa-question-circle',
+                        title: $(option.element).data('description'),
+                        css: { cursor: 'pointer' }
+                    }));
+            }
+
+            // function formatSelection(option) {
+            //     return $('<span>').text(option.text);
+            // }
+        });
+    </script>
+}

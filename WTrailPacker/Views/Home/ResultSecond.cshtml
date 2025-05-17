@@ -1,0 +1,113 @@
+﻿@model MealSchedule
+@{
+    ViewData["Title"] = "Result Second";
+}
+<title>Результаты расчета продуктов</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link rel="stylesheet" href="~/css/styleResultS.css">
+
+<div id="resultSecond">
+    <div class="containerResult">
+        <div class="headerResult">
+            <button class="btnBack" onclick="goToResultFirst(@Model.Hike.HikeID)">Назад</button>
+            <h1>План питания для @Model.Hike.NumDays дней</h1>
+        </div>
+
+        <div class="results">
+            @foreach (var day in Model.Days)
+            {
+                <div class="day-results">
+                    <h3>День @day.DayNumber</h3>
+
+                    <div class="meal-section">
+                        <div class="meal">
+                            <h4>Завтрак</h4>
+                            @foreach (var recipe in day.Breakfast)
+                            {
+                                <div class="recipe">
+                                    <h5>@recipe.RecipeName</h5>
+                                    <ul>
+                                        @foreach (var ingredient in recipe.RecipeIngredients)
+                                        {
+                                            <li>
+                                                @ingredient.Product.ProductName -
+                                                @ingredient.Quantity @ingredient.Unit
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="meal">
+                            <h4>Обед</h4>
+                            <!-- Аналогично для Lunch -->
+                            @foreach (var recipe in day.Lunch)
+                            {
+                                <div class="recipe">
+                                    <h5>@recipe.RecipeName</h5>
+                                    <ul>
+                                        @foreach (var ingredient in recipe.RecipeIngredients)
+                                        {
+                                            <li>
+                                                @ingredient.Product.ProductName -
+                                                @ingredient.Quantity @ingredient.Unit
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="meal">
+                            <h4>Ужин</h4>
+                            <!-- Аналогично для Dinner -->
+                            @foreach (var recipe in day.Dinner)
+                            {
+                                <div class="recipe">
+                                    <h5>@recipe.RecipeName</h5>
+                                    <ul>
+                                        @foreach (var ingredient in recipe.RecipeIngredients)
+                                        {
+                                            <li>
+                                                @ingredient.Product.ProductName -
+                                                @ingredient.Quantity @ingredient.Unit
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="meal">
+                            <h4>Перекусы</h4>
+                            <!-- Аналогично для Snacks -->
+                            @foreach (var recipe in day.Snacks)
+                            {
+                                <div class="recipe">
+                                    <h5>@recipe.RecipeName</h5>
+                                    <ul>
+                                        @foreach (var ingredient in recipe.RecipeIngredients)
+                                        {
+                                            <li>
+                                                @ingredient.Product.ProductName -
+                                                @ingredient.Quantity @ingredient.Unit
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <br />
+        <a asp-action="DownloadPdfResultSecond" asp-controller="Home" class="btnDownload">
+            <span class="material-symbols-outlined">download</span> Скачать
+        </a>
+    </div>
+
+</div>

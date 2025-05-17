@@ -1,0 +1,28 @@
+﻿@model Recipe
+
+@{
+    ViewData["Title"] = "Recipe View";
+}
+
+<section id="recipes" class="recipesView">
+    <div class="recipeView" style="color: black;">
+        <div class="recipe-card" style="font-size:20px;">
+            <h3>@Model.RecipeName</h3>
+            <br />
+            <hr />
+            <br />
+            <h3>Ингредиенты:</h3>
+            <ul>
+                @foreach (var ingredient in Model.RecipeIngredients)
+                {
+                    <li style="text-align: left; list-style-type: none;">
+                        @ingredient.Product?.ProductName (@ingredient.Quantity @ingredient.Unit)
+                    </li>
+                }
+            </ul>
+            <br />
+            <h3>Пошаговое приготовление:</h3>
+            <p>@Model.Instructions</p>
+        </div>
+    </div>
+</section>

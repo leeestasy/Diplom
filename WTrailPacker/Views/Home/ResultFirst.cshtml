@@ -1,0 +1,87 @@
+﻿@using WTrailPacker.Models
+@inject IFoodCalculationService CalculationService
+@model WTrailPacker.Models.FoodCalculationResult
+
+@{
+    ViewData["Title"] = "Result First";
+}
+
+<title>Результаты расчета продуктов</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+<link rel="stylesheet" href="~/css/styleResultF.css">
+
+<div id="resultSecond">
+    <div class="containerResult">
+        <div class="headerResult" style=" justify-content: space-between;">
+            <button class="btnResult" onclick="window.location.href='@Url.Action("Index", "Home")'">Назад</button>
+            <h1>Результаты расчета продуктов</h1>
+@*             <button class="btnResult" onclick="goToResultSecond(@Model.Hike.HikeID)">2 Вариант</button>
+ *@        </div>
+
+        <script>
+            // function goToResultSecond(hikeId) {
+            //     window.location.href = '@Url.Action("ResultSecond", "Home", new { hikeId = "__hikeId__" })'.replace('__hikeId__', hikeId);
+            // }
+        </script>
+        <div class="content">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Список продуктов</th>
+                        <th>Кол-во банок/упаковок</th>
+                        <th>Вес (кг)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Products != null && Model.Products.Any())
+                    {
+                        // Группируем продукты по имени и суммируем значения
+                        var groupedProducts = Model.Products
+                        .GroupBy(p => p.Product?.ProductName ?? p.OriginalProductName)
+                        .Select(g => new
+                        {
+                            Name = g.Key,
+                            Packages = g.Sum(p => p.Packages),
+                            TotalWeight = g.Sum(p => p.TotalWeight)
+                        })
+                        .Where(g => !string.IsNullOrEmpty(g.Name))
+                        .OrderBy(g => g.Name);
+
+                        foreach (var group in groupedProducts)
+                        {
+                            <tr>
+                                <td>@group.Name</td>
+                                <td>@group.Packages</td>
+                                <td>@group.TotalWeight.ToString("F2")</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3">Нет данных для отображения.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="weightAll">
+                <div class="export-buttons">
+                    <a asp-action="ExportToExcel" asp-route-hikeId="@Model.Hike.HikeID"
+                       class="btnDownload">Скачать Excel</a>
+
+                    <a asp-action="ExportToPDF" asp-route-hikeId="@Model.Hike.HikeID"
+                       class="btnDownload">Скачать PDF</a>
+                </div>
+@*                 <a asp-action="DownloadPdf" asp-controller="Home" class="btnDownload">
+                    <span class="material-symbols-outlined">download</span> Скачать
+                </a> *@
+                <div class="total">
+                    Общий вес продуктов:
+                    <b>@Model.TotalFoodWeight.ToString("F2") кг</b>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
