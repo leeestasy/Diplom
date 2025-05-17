@@ -1,0 +1,393 @@
+﻿html {
+    font-size: 14px;
+    scroll-behavior: smooth;
+    overflow-x: hidden !important;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    margin-bottom: 60px;
+    font-family: 'Lato', sans-serif;
+    overflow-x: hidden;
+}
+
+.bg-main {
+    background-color: #4d5545;
+}
+
+.gallery {
+    position: relative;
+    padding: 40px;
+    background: #6D765E;
+    text-align: center;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.gallery-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    height: 100%;
+}
+
+.gallery-item {
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+    .gallery-item:hover {
+        transform: scale(1.02);
+    }
+
+.gallery-img {
+    height: 410px;
+    object-fit: cover;
+}
+
+.gallery-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    color: white;
+    max-width: 80%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.quote {
+    text-align: center;
+    color: #FCF5E8;
+}
+
+.quote-author {
+    margin-top: 8px;
+    font-style: italic;
+    text-align: right;
+}
+
+.calculator {
+    background: white;
+    padding: 40px;
+    position: relative;
+    height: 100%;
+}
+
+.background-pattern path {
+    stroke: #6D765E;
+    stroke-width: 4;
+}
+
+.calculator-container {
+    max-width: 500px;
+    margin: 0 auto;
+    color: #565F48;
+    text-align: center;
+    height: 100%;
+}
+
+.text-danger {
+    color: darkorange;
+    font-style: italic;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #444;
+        font-weight:bold;
+    }
+
+    .form-group input,
+    .select2-container,
+    .form-group select {
+        width: 100%;
+        padding: 10px;
+        background: rgba(152, 166, 128, 0.65);
+        border: none;
+        border-radius: 5px;
+        transition: background 0.2s ease;
+        box-sizing: border-box;
+    }
+
+        .form-group input:hover, .select2-container:hover .select2-selection--single,
+        .form-group select:hover {
+            background: #c5ceba;
+        }
+
+.btn {
+    width: 100%;
+    background: #5c6652;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+    .btn:hover {
+        background: #4d5545;
+    }
+
+.btnMirror {
+    width: 100%;
+    background: white;
+    color: #5c6652;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+    .btnMirror:hover {
+        background: #ddd;
+    }
+
+.recipes {
+    padding: 40px;
+    text-align: center;
+    background: #6D765E;
+    height: 100%;
+    color: black;
+}
+
+#recipes .recipe-grid .recipe-card {
+    color: black;
+}
+
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    height: 100%;
+    color: black;
+}
+
+#recipes h1 {
+    color: white;
+}
+
+.recipe-card {
+    position: relative;
+    background: #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    color: black; 
+}
+
+    .recipe-card:hover {
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        transform: translateY(-0.25rem);
+        transform: scale(1.02);
+    }
+
+.btn {
+    width: 100%;
+    background: #5c6652;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    .btn:hover {
+        background: #4d5545;
+    }
+
+@media (max-width: 900px) {
+    .recipe-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 колонки на средних экранах */
+    }
+}
+
+@media (max-width: 600px) {
+    .recipe-grid {
+        grid-template-columns: repeat(1, 1fr); /* 1 колонка на маленьких экранах */
+    }
+}
+@media (max-width: 600px) {
+    .gallery-container {
+        flex-direction: column; /* Вертикальное расположение */
+        align-items: center; /* Центрирование элементов */
+        gap: 10px; /* Уменьшение расстояния между фото */
+    }
+
+    .gallery-item {
+        width: 100%; /* Ширина на всю доступную область */
+        max-width: 400px; /* Максимальная ширина для сохранения пропорций */
+    }
+
+    .gallery-img {
+        height: auto; /* Автоматическая высота */
+        max-height: 300px; /* Ограничение максимальной высоты */
+        width: 100%; /* Ширина на весь контейнер */
+        object-fit: cover; /* Сохранение пропорций изображения */
+        border-radius: 8px; /* Опционально: скругление углов */
+    }
+}
+.recipesView {
+    padding: 40px;
+    text-align: center;
+    color: black;
+    background: #6D765E;
+    height: 100%;
+}
+
+.recipesView {
+    height: 100%;
+}
+
+.search-button {
+    width: auto;
+    background: #5c6652;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.recipe-card ul {
+    text-align: left;
+}
+
+@media (max-width: 600px) {
+    .search-form-group {
+        flex-direction: column;
+        align-items: revert;
+    }
+
+    .search-form-group {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .select2-container * {
+        background-color: rgba(152, 166, 128, 0.65) !important;
+        background-image: none !important;
+    }
+
+    /* Переопределение всех фоновых стилей */
+    .select2-container--default .select2-selection--single,
+    .select2-container--default .select2-selection--single .select2-selection__rendered,
+    .select2-container .select2-selection--single {
+        background: rgba(152, 166, 128, 0.65) !important;
+        border: none !important;
+        border-radius: 5px !important;
+        height: auto !important;
+        min-height: 45px !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    /* Ховер-состояние */
+    .select2-container--default.select2-container--hover .select2-selection--single {
+        background: #c5ceba !important;
+    }
+
+    /* Фокус-состояние */
+    .select2-container--default.select2-container--focus .select2-selection--single {
+        background: #c5ceba !important;
+        box-shadow: none !important;
+    }
+
+    /* Стрелка селектора */
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        background: none !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+    }
+
+    /* Выпадающий список */
+    .select2-container--default .select2-results__option[aria-selected="true"] {
+        background: rgba(152, 166, 128, 0.4) !important;
+    }
+
+    /* Стилизация выпадающего списка */
+    .select2-dropdown {
+        background: rgba(152, 166, 128, 0.95) !important;
+        border: none !important;
+        border-radius: 5px !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+        margin-top: 5px !important;
+    }
+
+    /* Элементы списка */
+    .select2-results__option {
+        padding: 12px 15px !important;
+        color: #444 !important;
+        font-size: 16px !important;
+        transition: background 0.2s !important;
+    }
+
+    .select2-results__option--highlighted {
+        background: rgba(197, 206, 186, 0.7) !important;
+        color: #444 !important;
+    }
+
+    /* Иконка стрелки */
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 100% !important;
+        right: 12px !important;
+        width: 20px !important;
+    }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow b {
+            border-color: #444 transparent transparent transparent !important;
+            border-width: 6px 6px 0 6px !important;
+            margin-top: -3px !important;
+        }
+
+    /* Иконка вопроса */
+    .fa-question-circle {
+        color: #444 !important;
+        margin-left: 12px;
+        font-size: 16px !important;
+        opacity: 0.8;
+        transition: opacity 0.2s;
+    }
+
+        .fa-question-circle:hover {
+            opacity: 1;
+        }
+
+    /* Убираем поле поиска */
+    .select2-search--dropdown {
+        display: none !important;
+    }
+}
